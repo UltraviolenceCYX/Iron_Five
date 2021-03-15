@@ -7,7 +7,9 @@
 + chen yuxing
 + li sicheng
 
-## Laboratory 1 
+## Laboratory 1  
+Different approach for algorithms and data structure
+implementation
 ## Variant description 
 Set based on hash-map (collision resolution: separate chaining, link)
 + You can use the built-in list for storing buckets and a bucket itself
