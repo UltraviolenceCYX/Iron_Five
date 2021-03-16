@@ -55,7 +55,7 @@ class NewHash(object):
                     break
         self.items[index].append((key,value))  # add new item into the index list.
         self.count+=1
-        return True
+        return self
 
     def from_list(self,list):
         for i in list:
