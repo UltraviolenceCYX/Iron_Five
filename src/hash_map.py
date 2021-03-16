@@ -15,13 +15,35 @@ class NewHash(object):
         return k1==k2
 
 
-    def find(self,fuc):
+    def find(self,func):
         res=[]
         for list in self.items:
             for item in list:
-                if fuc(item[1]):
+                if func(item[1]):
                     res.append([item[0],item[1]])
         return res
+
+    def filter(self,func):
+        for list in self.items:
+            for item in list:
+                if func(item[1]):
+                    self.remove(item[0])
+
+    def map(self,func):
+
+        for list in self.items:
+            for item in list:
+                self.add(item[0],func(item[1]))
+        return True
+
+    def reduce(self,func,initial_state):
+        state=initial_state
+        for list in self.items:
+            for item in list:
+                state=func(state,item[1])
+        return state
+
+
 
 
     def add(self,key,value):
@@ -66,12 +88,23 @@ class NewHash(object):
 
         return False
 
+
+    def __iter__(self):
+        self.index=0
+        self.list=self.to_list()
+        return self
+
+    def __next__(self):
+        if self.index >= len(self.list):
+            raise StopIteration()
+        else:
+            self.index += 1
+            return self.list[self.index - 1]
+
 if __name__ =='__main__':
     a=NewHash()
-    a.from_list([(1,"fuck"),(3,'sdf')])
-    def judge(x):
-        if x=='fuck':
-            return True
-        else:
-            return False
-    print(a.find(judge))
+    a.from_list([(1,"ccvb"),(3,'sdf'),("asdf","asdf")])
+
+    for i in a:
+        print(i)
+
