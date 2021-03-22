@@ -19,10 +19,10 @@ class TestImmutableHashMap(unittest.TestCase):
 
     def test_remove(self):
         hash_map = NewHash()
-        cons(hash_map, 1, 1)
-        cons(hash_map, 2, 2)
-        cons(hash_map, 3, 3)
-        remove(hash_map, 2)
+        hash_map =cons(hash_map, 1, 1)
+        hash_map =cons(hash_map, 2, 2)
+        hash_map =cons(hash_map, 3, 3)
+        hash_map=remove(hash_map, 2)
         res_list = to_list(hash_map)
         self.assertEqual(res_list[0], [1, 1])
         self.assertEqual(res_list[1], [3, 3])
@@ -41,7 +41,7 @@ class TestImmutableHashMap(unittest.TestCase):
         ]
         for item in items:
             hash_map = NewHash()
-            from_list(hash_map, item)
+            hash_map=from_list(hash_map, item)
             self.assertEqual(to_list(hash_map), item)
 
     def test_to_list(self):
@@ -57,9 +57,9 @@ class TestImmutableHashMap(unittest.TestCase):
             else:
                 return False
         hash_map=NewHash()
-        cons(hash_map,1,1)
-        cons(hash_map,2,2)
-        cons(hash_map,3,3)
+        hash_map=cons(hash_map,1,1)
+        hash_map=cons(hash_map,2,2)
+        hash_map=cons(hash_map,3,3)
         self.assertEqual(find(hash_map,is_satisfied),[[2,2]])
 
     def test_filter(self):
@@ -82,13 +82,12 @@ class TestImmutableHashMap(unittest.TestCase):
     def test_map(self):
         def increment(x):
             return x+1
-
         hash_map = NewHash()
-        cons(hash_map, 1, 1)
-        cons(hash_map, 2, 2)
-        cons(hash_map, 3, 3)
-        cons(hash_map, 4, 4)
-        cons(hash_map, 5, 5)
+        hash_map = cons(hash_map, 1, 1)
+        hash_map = cons(hash_map, 2, 2)
+        hash_map = cons(hash_map, 3, 3)
+        hash_map = cons(hash_map, 4, 4)
+        hash_map = cons(hash_map, 5, 5)
         hash_map=map(hash_map,increment)
         list = to_list(hash_map)
         for num in range(0, size(hash_map)):
@@ -98,9 +97,9 @@ class TestImmutableHashMap(unittest.TestCase):
         def plus_operation(a,b):
             return a+b
         hash_map = NewHash()
-        cons(hash_map, 1, 1)
-        cons(hash_map, 2, 2)
-        cons(hash_map, 3, 3)
-        cons(hash_map, 4, 4)
-        cons(hash_map, 5, 5)
+        hash_map = cons(hash_map, 1, 1)
+        hash_map = cons(hash_map, 2, 2)
+        hash_map = cons(hash_map, 3, 3)
+        hash_map = cons(hash_map, 4, 4)
+        hash_map = cons(hash_map, 5, 5)
         self.assertEqual(reduce(hash_map,plus_operation,10),25)  # calculate the sum of the initial value 10 and all the values in the hash map
