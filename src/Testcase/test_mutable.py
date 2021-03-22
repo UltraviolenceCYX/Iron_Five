@@ -50,9 +50,17 @@ class TestHash(unittest.TestCase):
         a.from_list([[1, 1], [2, 2]])
         self.assertEqual(a.reduce(lambda st, e: st + e, 0), 3)
 
-    @given(st.lists(st.lists(st.integers,st.integers)))
-    def test_from_list_to_list_equality(self,a):
-        a=NewHash()
-        a.from_list(a)
-        b=a.to_list()
-        self.assertEqual(a,b)
+    def test_iter(self):
+        x=[[1, 1], [2, 2]]
+        a = NewHash()
+        a.from_list(x)
+        tmp=[]
+        for e in a:
+            tmp.append(e)
+        self.assertEqual(x,tmp)
+        self.assertEqual(a.to_list(),tmp)
+
+    def test_add(self):
+        self.assertEqual(NewHash().add(1, '1').to_list(), [[1, '1']])
+        self.assertEqual(NewHash().add(1, '1').add(2, '2').to_list(),[[1, '1'], [2, '2']])
+

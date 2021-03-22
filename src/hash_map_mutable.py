@@ -16,6 +16,7 @@ class NewHash(object):
 
 
     def find(self,func):
+
         res=[]
         for list in self.items:
             for item in list:
@@ -47,6 +48,8 @@ class NewHash(object):
 
 
     def add(self,key,value):
+        if key==None or value==None:
+            return self
         index=self.hash(key)
         if self.items[index]:     #if this index already got taken, we need to check the list whether the same key is exist, if so delete it.
             for item in self.items[index]:
@@ -69,6 +72,8 @@ class NewHash(object):
         return res
 
     def get(self,key):
+        if key == None:
+            return None
         index=self.hash(key)
         if self.items[index]:
             for item in self.items[index]:
@@ -78,6 +83,8 @@ class NewHash(object):
 
 
     def remove(self,key):
+        if key == None:
+            return False
         index=self.hash(key)
         if self.items[index]:
             for item in self.items[index]:
@@ -103,7 +110,7 @@ class NewHash(object):
 
 if __name__ =='__main__':
     a=NewHash()
-    a.from_list([(1,"ccvb"),(3,'sdf'),("asdf","asdf")])
+    a.add(None,'123')
 
     for i in a:
         print(i)
