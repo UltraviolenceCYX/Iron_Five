@@ -110,3 +110,5 @@ def reduce(hash_map, func, initial_state):
             state = func(state, item[1])
     return state
 
+def mempty():
+    return None
