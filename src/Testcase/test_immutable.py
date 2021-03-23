@@ -2,7 +2,7 @@ import unittest
 from hypothesis import given
 import hypothesis.strategies as st
 import sys
-sys.path.append('C:/Users/admin/Desktop/IRON FIVE/Iron_Five/src')
+sys.path.append('../../src')
 from hash_map_mutable import *
 from hash_map_immutable import *
 
