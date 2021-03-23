@@ -2,8 +2,9 @@ import unittest
 
 from hypothesis import given
 import hypothesis.strategies as st
-
-from src.hash_map_mutable import *
+import sys
+sys.path.append('C:/Users/admin/Desktop/IRON FIVE/Iron_Five/src')
+from hash_map_mutable import *
 
 class TestHash(unittest.TestCase):
     def test_size(self):
@@ -64,3 +65,5 @@ class TestHash(unittest.TestCase):
         self.assertEqual(NewHash().add(1, '1').to_list(), [[1, '1']])
         self.assertEqual(NewHash().add(1, '1').add(2, '2').to_list(),[[1, '1'], [2, '2']])
 
+if __name__ =='__main__':
+    unittest.main()

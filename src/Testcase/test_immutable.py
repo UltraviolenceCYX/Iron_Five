@@ -1,9 +1,10 @@
 import unittest
 from hypothesis import given
 import hypothesis.strategies as st
-
-from src.hash_map_mutable import *
-from src.hash_map_immutable import *
+import sys
+sys.path.append('C:/Users/admin/Desktop/IRON FIVE/Iron_Five/src')
+from hash_map_mutable import *
+from hash_map_immutable import *
 
 
 class TestImmutableHashMap(unittest.TestCase):
@@ -120,3 +121,6 @@ class TestImmutableHashMap(unittest.TestCase):
         list = to_list(hash_map_res)
         for num in range(0, size(hash_map_res)):
             self.assertEqual(list[num], [num + 1, num + 1]) # Test each element value of the merged hash table
+
+if __name__ =='__main__':
+    unittest.main()

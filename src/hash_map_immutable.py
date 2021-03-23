@@ -1,5 +1,7 @@
+
+
 import copy
-from hash_map_mutable import *
+import hash_map_mutable
 def cons(hash_map, key, value):
     if hash_map == None:
         return None

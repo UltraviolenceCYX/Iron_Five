@@ -27,6 +27,8 @@ Next, we will introduce the content of this lab from four aspects.
 Chen yuxing finished the mutable parts and corresponding testing, Li sicheng finished the immutable parts and corresponding testing.
 
  Here is the git log: 
+ ![](./fig/log.png)
+ 
 
  ### Explanation of taken design decisions and analysis  
 
@@ -38,7 +40,8 @@ So we  decide to use a list of lists to achieve the hash-map.  Using the hash fu
 
 First, you should install the test packages using command pip install hypothesis.
 
-Then, run the test with command  
+Then, run the test with command  `python test_immutable.py` `python test_mutable.py`
+`
 
 The following is a description of the methods in the hash table.
 
