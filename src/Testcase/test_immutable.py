@@ -1,5 +1,4 @@
 import unittest
-
 from hypothesis import given
 import hypothesis.strategies as st
 
@@ -103,3 +102,21 @@ class TestImmutableHashMap(unittest.TestCase):
         hash_map = cons(hash_map, 4, 4)
         hash_map = cons(hash_map, 5, 5)
         self.assertEqual(reduce(hash_map,plus_operation,10),25)  # calculate the sum of the initial value 10 and all the values in the hash map
+
+
+    def test_mconcat(self):
+        hash_map_A = NewHash()
+        hash_map_A = cons(hash_map_A, 1, 1)
+        hash_map_A = cons(hash_map_A, 2, 2)
+        hash_map_A = cons(hash_map_A, 3, 3)
+        hash_map_A = cons(hash_map_A, 4, 4)
+        hash_map_B = NewHash()
+        hash_map_B = cons(hash_map_B, 5, 5)
+        hash_map_B = cons(hash_map_B, 6, 6)
+        hash_map_B = cons(hash_map_B, 7, 7)
+        hash_map_B = cons(hash_map_B, 8, 8)
+        hash_map_res=mconcat(hash_map_A,hash_map_B)
+        self.assertEqual(size(hash_map_res),8) # Test the size of the merged hash table
+        list = to_list(hash_map_res)
+        for num in range(0, size(hash_map_res)):
+            self.assertEqual(list[num], [num + 1, num + 1]) # Test each element value of the merged hash table

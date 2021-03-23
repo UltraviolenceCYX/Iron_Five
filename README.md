@@ -71,7 +71,7 @@ Here is the immutable functions description:
 +  `filter(hash_map, is_filtered)`: is_filtered is a function return bool value, it will judge whether the elements in the hash table meet the filtering condition we set. This method will delete the elements that meet the condition and return the remaining elements.
 +  `map(hash_map, func)`:  func is a function which will change the value in the hash map. This function will change all items in the hash map by func function.
 +  `reduce(hash_map, func, initial_state)`: The func function defines the operation performed on two elements in the hash map. This function can do some calculations like sum up all the values in the hash map with the func function.
-
++  `mconcat(hash_map_A,hash_map_B)`: Combine two hash maps A and B
 ###  Conclusion 
 
 In this lab, we first understood the basic concepts and principles of the data structure that we need to implement, and then chose a specific implementation method to implement it(by using a list of lists). Finally, we implemented two versions of the hash table, that is, variable Version and immutable version, and tested to prove that our implementation is reliable and can run stably.

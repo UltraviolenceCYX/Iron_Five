@@ -1,5 +1,5 @@
 import copy
-
+from hash_map_mutable import *
 def cons(hash_map, key, value):
     if hash_map == None:
         return None
@@ -112,3 +112,14 @@ def reduce(hash_map, func, initial_state):
 
 def mempty():
     return None
+
+def mconcat(hash_map_A,hash_map_B):
+    if(hash_map_A== None and hash_map_B == None):
+        return None
+    else:
+        if(hash_map_A == None):
+            return hash_map_B
+        if(hash_map_B == None):
+            return hash_map_A
+        list_B=to_list(hash_map_B)
+        return from_list(hash_map_A,list_B)
