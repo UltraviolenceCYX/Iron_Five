@@ -52,16 +52,17 @@ class NewHash(object):
 
     def add(self,key,value):
         if key==None or value==None:
-            return self
+            return False
         index=self.hash(key)
         if self.items[index]:     #if this index already got taken, we need to check the list whether the same key is exist, if so delete it.
             for item in self.items[index]:
                 if self.equals(key,item[0]):
                     self.items[index].remove(item)
+                    self.count-=1
                     break
         self.items[index].append((key,value))  # add new item into the index list.
         self.count+=1
-        return self
+        return True
 
     def from_list(self,list):
         for i in list:
