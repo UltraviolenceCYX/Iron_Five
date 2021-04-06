@@ -111,5 +111,22 @@ class TestMutableSet(unittest.TestCase):
         set.add(5)
         self.assertEqual(set.reduce(plus_operation,10),25)  # calculate the sum of the initial value 10 and all the values in the set
 
+    @given(st.lists(st.integers()))
+    def test_from_list_to_list_equality(self, test_list):
+        set = NewSet()
+        handled_test_list=[]
+        for item in test_list:
+            if item not in handled_test_list:
+                handled_test_list.append(item)
+        set.from_list(handled_test_list)
+        transformed_test = set.to_list()
+        self.assertEqual(handled_test_list.sort(), transformed_test.sort())
+
+    @given(st.lists(st.integers()))
+    def test_python_len_and_list_size_equality(self, a):
+        set = NewSet()
+        set.from_list(a)
+        self.assertEqual(set.size(), len(a))
+
 if __name__ =='__main__':
     unittest.main()
