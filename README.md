@@ -15,7 +15,7 @@ Set based on hash-map (collision resolution: separate chaining, link)
 + You need to check that your implementation correctly works with None value.
 ## Synopsis
 
-In this lab, we implemented two versions of the hash table, and proved our implementation is correct through testing. 
+In this lab, we implemented two versions of the set based on hash table, and proved our implementation is correct through testing. 
 
 Next, we will introduce the content of this lab from four aspects.
 
@@ -36,6 +36,8 @@ A hash table uses a hash function to compute an *index*, also called a *hash cod
 
 So we  decide to use a list of lists to achieve the hash-map.  Using the hash function that python provided, we can put the key into hash function, calculate the index of the item, then put this item into the indexed list, if other item has the same hash value, it will be append to the indexed list. During the lookup, search every items in the indexed list.
 
+after creating the hash table, we will create a set which posess a hash table.
+
 ### Work demonstration 
 
 First, you should install the test packages using command pip install hypothesis.
@@ -43,7 +45,7 @@ First, you should install the test packages using command pip install hypothesis
 Then, run the test with command  `python test_immutable.py` `python test_mutable.py`
 `
 
-The following is a description of the methods in the hash table.
+The following is a description of the methods in the set.
 
 The mutable version of functions are class functions, after an object implement the method, the process will change the original object(some functions, not all functions).
 
@@ -65,16 +67,15 @@ The immutable version of functions are just simple functions. The parameters of 
 
 Here is the immutable functions description:
 
-+  `cons(hash_map, key, value)` :  Add a key-value set to the hash map. 
-+  `remove(hash_map,key)` :  Remove a key and it's value.
-+  `size(hash_map)` :  Return the size of the hash map.
-+  `from_list(hash_map, list)` :  Add elements of the list to the end of the hash map.
++  `remove(hash_map,key)` :  Remove the value.
++  `size(hash_map)` :  Return the size of the set.
++  `from_list(hash_map, list)` :  Add elements of the list to the end of the set.
 +  `to_list(hash_map)` :  Convert the hash map to a list.
 +  `find(hash_map, is_satisfied)` : is_satisfied is a function return bool value,it will judge if the elements in hash map meet the condition we set.  This function will search all items in hash map, add the qualified item which satisfy the condition we set into the result list and return it.
 +  `filter(hash_map, is_filtered)`: is_filtered is a function return bool value, it will judge whether the elements in the hash table meet the filtering condition we set. This method will delete the elements that meet the condition and return the remaining elements.
 +  `map(hash_map, func)`:  func is a function which will change the value in the hash map. This function will change all items in the hash map by func function.
 +  `reduce(hash_map, func, initial_state)`: The func function defines the operation performed on two elements in the hash map. This function can do some calculations like sum up all the values in the hash map with the func function.
-+  `mconcat(hash_map_A,hash_map_B)`: Combine two hash maps A and B
++  `mconcat(hash_map_A,hash_map_B)`: Combine two set A and B
 ###  Conclusion 
 
 In this lab, we first understood the basic concepts and principles of the data structure that we need to implement, and then chose a specific implementation method to implement it(by using a list of lists). Finally, we implemented two versions of the hash table, that is, variable Version and immutable version, and tested to prove that our implementation is reliable and can run stably.
