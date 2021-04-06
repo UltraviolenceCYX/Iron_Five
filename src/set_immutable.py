@@ -4,9 +4,9 @@ from src.set_mutable import *
 def size(set:NewSet):
     return set.size()
 
+
 def add(set:NewSet,element):
-    if set == None:
-        return None
+
     if element == None :
         return set
     set_copy = copy.deepcopy(set)
@@ -14,8 +14,7 @@ def add(set:NewSet,element):
     return set_copy
 
 def remove(set:NewSet,element):
-    if set == None:
-        return None
+
     if element == None :
         return set
     set_copy = copy.deepcopy(set)
@@ -24,11 +23,12 @@ def remove(set:NewSet,element):
 
 
 def from_list(set:NewSet,list):
-    if set == None:
-        return None
     if list == None :
         return set
-    set_copy = copy.deepcopy(set)
+    if set is None:
+        set_copy=NewSet()
+    else:
+        set_copy = copy.deepcopy(set)
     for i in list:
         set_copy.hash_map.add(i, object())
     return set_copy
@@ -74,3 +74,27 @@ def reduce(set:NewSet,func,initial_state):
     for item in set.to_list():
         state = func(state, item)
     return state
+
+def mconcat(set1:NewSet,set2:NewSet):
+    if set1 is None and set2 is None:
+        return None
+    if set2 is None:
+        return set1
+    if set2 is None:
+        return set1
+
+    s1=to_list(set1)
+    s2=to_list(set2)
+
+    res=NewSet()
+
+
+    for item in s1:
+        res=add(res,item)
+
+    tem=res.to_list()
+
+    for item in s2:
+        if item not in tem:
+            res=add(res,item)
+    return res

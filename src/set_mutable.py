@@ -6,6 +6,10 @@ class NewSet(object):
         self.hash_map=NewHash() #based hash map
         self.value = object()  # the value of based hashmap
 
+    def __eq__(self, other):
+        return  self.__dict__ == other.__dict__ or self.to_list() == other.to_list()
+
+
     def size(self):
         return self.hash_map.count
 
