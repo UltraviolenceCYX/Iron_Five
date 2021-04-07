@@ -80,8 +80,8 @@ def mconcat(set1:NewSet,set2:NewSet):
         return None
     if set2 is None:
         return set1
-    if set2 is None:
-        return set1
+    if set1 is None:
+        return set2
 
     s1=to_list(set1)
     s2=to_list(set2)

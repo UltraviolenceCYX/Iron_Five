@@ -126,18 +126,23 @@ class TestImmutableHashMap(unittest.TestCase):
 
     @given(a=st.lists(st.integers()), b=st.lists(st.integers()), c=st.lists(st.integers()))
     def test_monoid_associativity(self, a, b, c):
-        dict_a = from_list(None,a)
-        dict_b = from_list(None,b)
-        dict_c = from_list(None,c)
-        a_b = mconcat(dict_a, dict_b)
-        b_a = mconcat(dict_b, dict_a)
-        self.assertEqual(to_list(a_b).sort(), to_list(b_a).sort())
-        c_b = mconcat(dict_c, dict_b)
-        b_c = mconcat(dict_b, dict_c)
-        self.assertEqual(to_list(c_b).sort(), to_list(b_c).sort())
-        a_b__c = mconcat(dict_c, a_b)
-        a__b_c = mconcat(dict_a, b_c)
-        self.assertEqual(to_list(a_b__c).sort(), to_list(a__b_c).sort())
-
+        set_a = from_list(None,a)
+        set_b = from_list(None,b)
+        set_c = from_list(None,c)
+        none_a=mconcat(None,set_a)
+        a_none=mconcat(set_a,None)
+        self.assertEqual(none_a,a_none)
+        a_b = mconcat(set_a, set_b)
+        b_a = mconcat(set_b, set_a)
+        self.assertEqual(a_b,b_a)
+        b_c = mconcat(set_b, set_c)
+        c_b = mconcat(set_c, set_b)
+        self.assertEqual(b_c,c_b)
+        a__b_c = mconcat(set_a, b_c)
+        a_b__c = mconcat(a_b,set_c)
+        self.assertEqual(a__b_c, a_b__c)
         self.assertEqual(mconcat(None, None), None)
+
+if __name__ =='__main__':
+    unittest.main()
 

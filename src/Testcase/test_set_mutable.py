@@ -111,6 +111,27 @@ class TestMutableSet(unittest.TestCase):
         set.add(5)
         self.assertEqual(set.reduce(plus_operation,10),25)  # calculate the sum of the initial value 10 and all the values in the set
 
+    def test_mconcat(self):
+        set1 = NewSet()
+        set2 = NewSet()
+        set3 = NewSet()
+
+        set1.from_list( [1, 2])
+        set2.from_list( [3, 4])
+        set3.from_list( [1, 2, 3, 4])
+        set1=set1.mconcat(set2)
+        self.assertEqual(set1.to_list(), set3.to_list())
+
+    def test_iter(self):
+        list=[1,2,3]
+        set = NewSet()
+        set.from_list(list)
+        tmp=[]
+        for item in set:
+            tmp.append(item)
+        self.assertEqual(list,tmp)
+        self.assertEqual(set.to_list(),tmp)
+
     @given(st.lists(st.integers()))
     def test_from_list_to_list_equality(self, test_list):
         set = NewSet()
@@ -119,14 +140,26 @@ class TestMutableSet(unittest.TestCase):
             if item not in handled_test_list:
                 handled_test_list.append(item)
         set.from_list(handled_test_list)
-        transformed_test = set.to_list()
-        self.assertEqual(handled_test_list.sort(), transformed_test.sort())
+        transformed_test_list = set.to_list()
+        self.assertEqual(handled_test_list.sort(), transformed_test_list.sort())
 
-    @given(st.lists(st.integers()))
-    def test_python_len_and_list_size_equality(self, a):
-        set = NewSet()
-        set.from_list(a)
-        self.assertEqual(set.size(), len(a))
+    @given(a=st.lists(st.integers()), b=st.lists(st.integers()), c=st.lists(st.integers()))
+    def test_monoid_associativity(self, a, b, c):
+        set_a=NewSet()
+        set_b=NewSet()
+        set_c=NewSet()
+        set_a.from_list(a)
+        set_b.from_list(b)
+        set_c.from_list(c)
+        a_b=set_a.mconcat(set_b)
+        b_a=set_b.mconcat(set_a)
+        self.assertEqual(a_b, b_a)
+        b_c = set_b.mconcat(set_c)
+        c_b = set_c.mconcat(set_b)
+        self.assertEqual(b_c,c_b)
+        a__b_c = set_a.mconcat(b_c)
+        a_b__c = a_b.mconcat(set_c)
+        self.assertEqual(a__b_c,a_b__c)
 
 if __name__ =='__main__':
     unittest.main()

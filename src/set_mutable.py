@@ -1,5 +1,5 @@
-
-from hash_map_mutable import *
+import copy
+from hash_map import *
 class NewSet(object):
 
     def __init__(self):
@@ -7,7 +7,7 @@ class NewSet(object):
         self.value = object()  # the value of based hashmap
 
     def __eq__(self, other):
-        return  self.__dict__ == other.__dict__ or self.to_list() == other.to_list()
+        return   self.to_list().sort()== other.to_list().sort()
 
 
     def size(self):
@@ -68,3 +68,34 @@ class NewSet(object):
         for item in self.to_list():
             state=func(state,item)
         return state
+
+    def mconcat(self, set):
+        if self is None and set is None:
+            return None
+        if set is None:
+            return self
+        if self is None:
+            return set
+        list_set_a=self.to_list()
+        list_set_b=set.to_list()
+        res = NewSet()
+        for item in list_set_a:
+            res.add(item)
+        tem=copy.deepcopy(res)
+        tem=tem.to_list()
+        for item in list_set_b:
+            if item not in tem:
+                res.add(item)
+        return res
+
+    def __iter__(self):
+        self.index = 0
+        self.list = self.to_list()
+        return self
+
+    def __next__(self):
+        if self.index >= len(self.list):
+            raise StopIteration()
+        else:
+            self.index += 1
+            return self.list[self.index - 1]
