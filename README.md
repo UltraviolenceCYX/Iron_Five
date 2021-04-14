@@ -40,9 +40,9 @@ After creating the hash table, we created a set which possesses a hash table and
 
 ### Work demonstration 
 
-First, you should install the test packages using command `pip install hypothesis`.
+First, you should install the test packages using command `pip install hypothesis and pip install pytest`.
 
-Then, Just open the file(`python test_set_immutable.py` `python test_set_mutable.py`) which starts with Test. Run the main method. We can see that the results are correct.
+Then, Just open the file set_pytest.py and run the main method. We can see that the results are correct.
 
 ### Compare mutable and immutable implementation 
 

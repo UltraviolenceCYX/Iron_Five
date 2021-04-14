@@ -32,8 +32,11 @@ class TestMutableSet(unittest.TestCase):
         self.assertEqual(set.to_list(),[1,2])
         self.assertEqual(set.size(),2)
         set.add(None)
-        self.assertEqual(set.to_list(), [1, 2,None])
         self.assertEqual(set.size(), 3)
+        list_set=NewSet()
+        list_set.from_list([1, 2,None])
+        self.assertEqual(set, list_set)
+
 
 
     def test_remove(self):

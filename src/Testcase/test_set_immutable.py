@@ -4,7 +4,7 @@ from hypothesis import given
 import hypothesis.strategies as st
 import sys
 sys.path.append('../../src')
-from set_immutable import *
+from src.set_immutable  import *
 
 
 class TestImmutableHashMap(unittest.TestCase):
@@ -16,6 +16,8 @@ class TestImmutableHashMap(unittest.TestCase):
         self.assertEqual(size(b),1)
         b=add(b,2)
         self.assertEqual(size(b),2)
+        b = add(b, None)
+        self.assertEqual(size(b), 3)
 
 
     def test_add(self):
@@ -26,14 +28,27 @@ class TestImmutableHashMap(unittest.TestCase):
         b=add(b,2)
         self.assertEqual(to_list(b),[1,2])
         self.assertEqual(size(b),2)
+        b = add(b, None)
+        list_set = NewSet()
+        list_set.from_list([1, 2, None])
+        self.assertEqual(b, list_set)
+
 
     def test_remove(self):
         set=NewSet()
         b=add(set,1)
         b=add(b,2)
+        b=add(b,None)
 
-        self.assertEqual(to_list(remove(b,1)), [2])
-        self.assertEqual(size(remove(b,1)),1)
+        list_set = NewSet()
+        list_set.from_list([1, 2, None])
+        self.assertEqual(b, list_set)
+
+
+        b=remove(b,None)
+        self.assertEqual(b.to_list(), [1,2])
+
+
 
     def test_to_list(self):
         set = NewSet()
@@ -41,6 +56,10 @@ class TestImmutableHashMap(unittest.TestCase):
         self.assertEqual(to_list(b), [1])
         b=add(b,2)
         self.assertEqual(to_list(b), [1, 2])
+        b = add(b, None)
+        list_set = NewSet()
+        list_set.from_list([1, 2, None])
+        self.assertEqual(b, list_set)
 
 
     def test_from_list(self):
@@ -49,6 +68,7 @@ class TestImmutableHashMap(unittest.TestCase):
             [1],
             [1,2],
             [1, 2,3],
+            [1, 2, 3, None]
         ]
         for list in data:
             set=NewSet()

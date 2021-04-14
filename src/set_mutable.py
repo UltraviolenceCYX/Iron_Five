@@ -7,19 +7,22 @@ class NewSet(object):
         self.value = object()  # the value of based hashmap
 
     def __eq__(self, other):
+        self_copy=copy.deepcopy(self)
+        other_copy = copy.deepcopy(other)
         if self.to_list().__contains__(None) and other.to_list().__contains__(None):
-            self.remove(None)
-            other.remove(None)
-            return   self.to_list().sort()== other.to_list().sort()
+            self_copy.remove(None)
+            other_copy.remove(None)
+            return   self_copy.to_list().sort()== other_copy.to_list().sort()
         if not self.to_list().__contains__(None) and not other.to_list().__contains__(None):
             return self.to_list().sort() == other.to_list().sort()
         else:
-            if self.to_list().__contains__(None):
-                self.remove(None)
-                return self.to_list().sort() == other.to_list().sort()
-            else:
-                other.remove(None)
-                return self.to_list().sort() == other.to_list().sort()
+            return False
+            # if self.to_list().__contains__(None):
+            #     self.remove(None)
+            #     return self.to_list().sort() == other.to_list().sort()
+            # else:
+            #     other.remove(None)
+            #     return self.to_list().sort() == other.to_list().sort()
 
 
     def size(self):

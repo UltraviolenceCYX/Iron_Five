@@ -7,16 +7,14 @@ def size(set:NewSet):
 
 def add(set:NewSet,element):
 
-    if element == None :
-        return set
+
     set_copy = copy.deepcopy(set)
     set_copy.add(element)
     return set_copy
 
 def remove(set:NewSet,element):
 
-    if element == None :
-        return set
+
     set_copy = copy.deepcopy(set)
     set_copy.hash_map.remove(element)
     return set_copy
