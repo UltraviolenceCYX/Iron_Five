@@ -16,6 +16,11 @@ class TestMutableSet(unittest.TestCase):
         self.assertEqual(set.size(), 1)
         set.add(2)
         self.assertEqual(set.size(), 2)
+        set.add(None)
+        self.assertEqual(set.size(), 3)
+        set.add(None)
+        self.assertEqual(set.size(), 3)
+
 
 
     def test_add(self):
@@ -26,15 +31,25 @@ class TestMutableSet(unittest.TestCase):
         set.add(2)
         self.assertEqual(set.to_list(),[1,2])
         self.assertEqual(set.size(),2)
+        set.add(None)
+        self.assertEqual(set.to_list(), [1, 2,None])
+        self.assertEqual(set.size(), 3)
 
 
     def test_remove(self):
         set=NewSet()
         set.add(1)
         set.add(2)
+        set.add(None)
+        set.add(3)
         set.remove(1)
-        self.assertEqual(set.to_list(), [2])
-        self.assertEqual(set.size(),1)
+        set.remove(None)
+        # try:
+        #     set.remove(4)
+        # except ValueError:
+        self.assertEqual(set.remove(4),ValueError('Element not exist!'))
+        # self.assertEqual(set.to_list(), [2,3])
+        # self.assertEqual(set.size(),2)
 
     def test_to_list(self):
         set = NewSet()
@@ -42,6 +57,8 @@ class TestMutableSet(unittest.TestCase):
         self.assertEqual(set.to_list(), [1])
         set.add(2)
         self.assertEqual(set.to_list(), [1, 2])
+        set.add(None)
+        self.assertEqual(set.to_list(), [1, 2,None])
 
     def test_from_list(self):
         data = [
@@ -49,6 +66,8 @@ class TestMutableSet(unittest.TestCase):
             [1],
             [1,2],
             [1, 2,3],
+            [1, 2, 3,None],
+
         ]
         for list in data:
             set=NewSet()
@@ -58,6 +77,8 @@ class TestMutableSet(unittest.TestCase):
 
     def test_find(self):
         def is_satisfied(x):
+            if x==None:
+                return False
             if x%2==0:
                 return True
             else:
@@ -67,11 +88,14 @@ class TestMutableSet(unittest.TestCase):
         set.add(2)
         set.add(3)
         set.add(4)
+        set.add(None)
         self.assertEqual(set.find(is_satisfied),[2,4])
 
     def test_filter(self):
         def is_filtered(x):  # remove elements with a value less than 3 in the set
-            if x<3:
+            if x == None:
+                return True
+            if x<3 :
                 return True
             else:
                 return False
@@ -81,6 +105,7 @@ class TestMutableSet(unittest.TestCase):
         set.add(3)
         set.add(4)
         set.add(5)
+        set.add(None)
         set.filter(is_filtered)
         list = set.to_list()
         for num in range(0, set.size()):
@@ -88,8 +113,12 @@ class TestMutableSet(unittest.TestCase):
 
     def test_map(self):
         def increment(x):
-            return x+10
+            if x == None:
+                return 10
+            else:
+             return x+10
         set = NewSet()
+        set.add(None)
         set.add(1)
         set.add(2)
         set.add(3)
@@ -98,17 +127,24 @@ class TestMutableSet(unittest.TestCase):
         set.map(increment)
         list = set.to_list()
         for num in range(0, set.size()):
-            self.assertEqual(list[num], num+11)  # test if the value of every element has been added
+            if list[num] == None:
+                self.assertEqual(list[num], 10)
+            else:
+                self.assertEqual(list[num], num+10)  # test if the value of every element has been added
 
     def test_reduce(self):
         def plus_operation(a,b):
-            return a+b
+            if b == None:
+                return a
+            else:
+                return a+b
         set = NewSet()
         set.add(1)
         set.add(2)
         set.add(3)
         set.add(4)
         set.add(5)
+        set.add(None)
         self.assertEqual(set.reduce(plus_operation,10),25)  # calculate the sum of the initial value 10 and all the values in the set
 
     def test_mconcat(self):
@@ -117,13 +153,13 @@ class TestMutableSet(unittest.TestCase):
         set3 = NewSet()
 
         set1.from_list( [1, 2])
-        set2.from_list( [3, 4])
-        set3.from_list( [1, 2, 3, 4])
+        set2.from_list( [3, 4,None])
+        set3.from_list( [1, 2, 3, 4,None])
         set1=set1.mconcat(set2)
         self.assertEqual(set1.to_list(), set3.to_list())
 
     def test_iter(self):
-        list=[1,2,3]
+        list=[1,2,3,None]
         set = NewSet()
         set.from_list(list)
         tmp=[]

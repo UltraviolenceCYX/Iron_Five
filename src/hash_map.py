@@ -51,7 +51,7 @@ class NewHash(object):
 
 
     def add(self,key,value):
-        if key==None or value==None:
+        if value==None:
             return False
         index=self.hash(key)
         if self.items[index]:     #if this index already got taken, we need to check the list whether the same key is exist, if so delete it.
@@ -87,8 +87,6 @@ class NewHash(object):
 
 
     def remove(self,key):
-        if key == None:
-            return False
         index=self.hash(key)
         if self.items[index]:
             for item in self.items[index]:
@@ -96,8 +94,7 @@ class NewHash(object):
                     self.items[index].remove(item)
                     self.count -= 1
                     return True
-
-        return False
+        raise ValueError('Element not exist!')
 
 
     def __iter__(self):

@@ -14,13 +14,9 @@ class NewSet(object):
         return self.hash_map.count
 
     def add(self,element):
-        if element == None:
-            return self
         return self.hash_map.add(element,self.value)
 
     def remove(self,element):
-        if element == None:
-            return self
         return self.hash_map.remove(element)
 
     def from_list(self,list):
