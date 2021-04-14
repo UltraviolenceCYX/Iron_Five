@@ -1,5 +1,6 @@
 import unittest
 
+import pytest
 from hypothesis import given
 import hypothesis.strategies as st
 import sys
@@ -47,6 +48,8 @@ class TestImmutableHashMap(unittest.TestCase):
 
         b=remove(b,None)
         self.assertEqual(b.to_list(), [1,2])
+        with pytest.raises(ValueError):
+            b = remove(b, 4)
 
 
 
