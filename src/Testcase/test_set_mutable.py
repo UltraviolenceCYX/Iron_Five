@@ -4,8 +4,8 @@ from hypothesis import given
 import hypothesis.strategies as st
 import sys
 sys.path.append('../../src')
+import pytest
 from set_mutable import *
-
 class TestMutableSet(unittest.TestCase):
 
     def test_size(self):
@@ -44,12 +44,11 @@ class TestMutableSet(unittest.TestCase):
         set.add(3)
         set.remove(1)
         set.remove(None)
-        # try:
-        #     set.remove(4)
-        # except ValueError:
-        self.assertEqual(set.remove(4),ValueError('Element not exist!'))
-        # self.assertEqual(set.to_list(), [2,3])
-        # self.assertEqual(set.size(),2)
+        self.assertEqual(set.to_list(), [2, 3])
+        self.assertEqual(set.size(), 2)
+        with pytest.raises(ValueError):
+            set.remove(4)
+
 
     def test_to_list(self):
         set = NewSet()
@@ -165,8 +164,9 @@ class TestMutableSet(unittest.TestCase):
         tmp=[]
         for item in set:
             tmp.append(item)
-        self.assertEqual(list,tmp)
-        self.assertEqual(set.to_list(),tmp)
+        set_from_list=NewSet()
+        set_from_list.from_list(tmp)
+        self.assertEqual(set,set_from_list)
 
     @given(st.lists(st.integers()))
     def test_from_list_to_list_equality(self, test_list):
