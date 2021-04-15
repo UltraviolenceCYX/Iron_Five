@@ -75,6 +75,11 @@ class TestMutableSet(unittest.TestCase):
             set=NewSet()
             set.from_list(list)
             self.assertEqual(set.to_list(), list)
+        num=1
+        set_from_num=NewSet()
+        with pytest.raises(TypeError):
+            set_from_num.from_list(num)
+
 
 
     def test_find(self):
@@ -92,6 +97,8 @@ class TestMutableSet(unittest.TestCase):
         set.add(4)
         set.add(None)
         self.assertEqual(set.find(is_satisfied),[2,4])
+        with pytest.raises(TypeError):
+            set.find(1)
 
     def test_filter(self):
         def is_filtered(x):  # remove elements with a value less than 3 in the set
@@ -112,6 +119,9 @@ class TestMutableSet(unittest.TestCase):
         list = set.to_list()
         for num in range(0, set.size()):
             self.assertEqual(list[num], num+3)  # 1 and 2 were removed
+
+        with pytest.raises(TypeError):
+            set.filter(1)
 
     def test_map(self):
         def increment(x):
@@ -134,6 +144,9 @@ class TestMutableSet(unittest.TestCase):
             else:
                 self.assertEqual(list[num], num+10)  # test if the value of every element has been added
 
+        with pytest.raises(TypeError):
+            set.map(1)
+
     def test_reduce(self):
         def plus_operation(a,b):
             if b == None:
@@ -149,6 +162,9 @@ class TestMutableSet(unittest.TestCase):
         set.add(None)
         self.assertEqual(set.reduce(plus_operation,10),25)  # calculate the sum of the initial value 10 and all the values in the set
 
+        with pytest.raises(TypeError):
+            set.reduce(1,1)
+
     def test_mconcat(self):
         set1 = NewSet()
         set2 = NewSet()
@@ -159,6 +175,9 @@ class TestMutableSet(unittest.TestCase):
         set3.from_list( [1, 2, 3, 4,None])
         set1=set1.mconcat(set2)
         self.assertEqual(set1.to_list(), set3.to_list())
+
+        with pytest.raises(TypeError):
+            set1.mconcat(1)
 
     def test_iter(self):
         list=[1,2,3,None]

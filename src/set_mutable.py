@@ -1,5 +1,6 @@
 import copy
 from hash_map import *
+from inspect import isfunction
 class NewSet(object):
 
     def __init__(self):
@@ -35,6 +36,8 @@ class NewSet(object):
         return self.hash_map.remove(element)
 
     def from_list(self,list):
+        if type(list).__name__!='list':
+            raise TypeError('Parameter must be list type!')
         if list == None:
             return None
         for i in list:
@@ -48,6 +51,8 @@ class NewSet(object):
         return res
 
     def find(self,is_satisfied):
+        if not isfunction(is_satisfied):
+            raise TypeError('Parameter must be function!')
         if is_satisfied==None:
             return None
         res=[]
@@ -58,6 +63,8 @@ class NewSet(object):
 
 
     def filter(self,is_filtered):
+        if not isfunction(is_filtered):
+            raise TypeError('Parameter must be function!')
         if is_filtered == None:
             return self
         for item in self.to_list():
@@ -65,6 +72,8 @@ class NewSet(object):
                 self.remove(item)
 
     def map(self,func):
+        if not isfunction(func):
+            raise TypeError('Parameter must be function!')
         if func == None:
             return self
         for item in self.to_list():
@@ -73,6 +82,8 @@ class NewSet(object):
         return True
 
     def reduce(self,func,initial_state):
+        if not isfunction(func):
+            raise TypeError('Parameter must be function!')
         if func==None or initial_state == None:
             return None
         state=initial_state
@@ -81,23 +92,23 @@ class NewSet(object):
         return state
 
     def mconcat(self, set):
-        if self is None and set is None:
-            return None
         if set is None:
             return self
-        if self is None:
-            return set
-        list_set_a=self.to_list()
-        list_set_b=set.to_list()
-        res = NewSet()
-        for item in list_set_a:
-            res.add(item)
-        tem=copy.deepcopy(res)
-        tem=tem.to_list()
-        for item in list_set_b:
-            if item not in tem:
-                res.add(item)
-        return res
+        else:
+            if not isinstance(set,NewSet):
+                raise TypeError('Parameter must be set!')
+            else:
+                list_set_a=self.to_list()
+                list_set_b=set.to_list()
+                res = NewSet()
+                for item in list_set_a:
+                    res.add(item)
+                tem=copy.deepcopy(res)
+                tem=tem.to_list()
+                for item in list_set_b:
+                    if item not in tem:
+                        res.add(item)
+                return res
 
     def __iter__(self):
         self.index = 0
