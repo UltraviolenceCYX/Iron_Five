@@ -21,6 +21,8 @@ def remove(set:NewSet,element):
 
 
 def from_list(set:NewSet,list):
+    if type(list).__name__ != 'list':
+        raise TypeError('Parameter must be list type!')
     if list == None :
         return set
     if set is None:
@@ -39,6 +41,8 @@ def to_list(set:NewSet):
     return res
 
 def find(set:NewSet,is_satisfied):
+    if not isfunction(is_satisfied):
+        raise TypeError('Parameter must be function!')
     if is_satisfied == None:
         return None
     res = []
@@ -48,6 +52,8 @@ def find(set:NewSet,is_satisfied):
     return res
 
 def filter(set:NewSet,is_filtered):
+    if not isfunction(is_filtered):
+        raise TypeError('Parameter must be function!')
     if is_filtered == None:
         return None
     set_copy = copy.deepcopy(set)
@@ -57,6 +63,8 @@ def filter(set:NewSet,is_filtered):
     return set_copy
 
 def map(set:NewSet,func):
+    if not isfunction(func):
+        raise TypeError('Parameter must be function!')
     if func == None:
         return None
     set_copy = copy.deepcopy(set)
@@ -66,6 +74,8 @@ def map(set:NewSet,func):
     return set_copy
 
 def reduce(set:NewSet,func,initial_state):
+    if not isfunction(func):
+        raise TypeError('Parameter must be function!')
     if func == None or initial_state == None:
         return None
     state = initial_state
