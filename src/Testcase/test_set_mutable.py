@@ -1,12 +1,14 @@
 import unittest
 
 from hypothesis import given
+from collections import Counter
 import hypothesis.strategies as st
 import sys
 sys.path.append('../../src')
 import pytest
 from set_mutable import *
 class TestMutableSet(unittest.TestCase):
+
 
     def test_size(self):
         set=NewSet()
@@ -54,27 +56,27 @@ class TestMutableSet(unittest.TestCase):
 
 
     def test_to_list(self):
+        def compare(s, t): #Judge whether two lists contain the same elements
+            return Counter(s) == Counter(t)
         set = NewSet()
         set.add(1)
-        self.assertEqual(set.to_list(), [1])
+        self.assertEqual(compare(set.to_list(),[1]),True)
         set.add(2)
-        self.assertEqual(set.to_list(), [1, 2])
+        self.assertEqual(compare(set.to_list(),[1,2]),True)
         set.add(None)
-        self.assertEqual(set.to_list(), [1, 2,None])
+        self.assertEqual(compare(set.to_list(),[1,2,None]),True)
 
     def test_from_list(self):
-        data = [
-            [],
-            [1],
-            [1,2],
-            [1, 2,3],
-            [1, 2, 3,None],
+        data =[1, 2, 3,None]
+        set_from_list=NewSet()
+        set_from_list.from_list(data)
+        set=NewSet()
+        set.add(1)
+        set.add(2)
+        set.add(3)
+        set.add(None)
+        self.assertEqual(set_from_list, set)
 
-        ]
-        for list in data:
-            set=NewSet()
-            set.from_list(list)
-            self.assertEqual(set.to_list(), list)
         num=1
         set_from_num=NewSet()
         with pytest.raises(TypeError):
