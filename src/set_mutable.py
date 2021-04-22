@@ -18,12 +18,7 @@ class NewSet(object):
             return self.to_list().sort() == other.to_list().sort()
         else:
             return False
-            # if self.to_list().__contains__(None):
-            #     self.remove(None)
-            #     return self.to_list().sort() == other.to_list().sort()
-            # else:
-            #     other.remove(None)
-            #     return self.to_list().sort() == other.to_list().sort()
+
 
 
     def size(self):
@@ -100,15 +95,18 @@ class NewSet(object):
             else:
                 list_set_a=self.to_list()
                 list_set_b=set.to_list()
-                res = NewSet()
-                for item in list_set_a:
-                    res.add(item)
-                tem=copy.deepcopy(res)
-                tem=tem.to_list()
+                # res = NewSet()
+                # for item in list_set_a:
+                #     res.add(item)
+                # tem=copy.deepcopy(res)
+                # tem=tem.to_list()
                 for item in list_set_b:
-                    if item not in tem:
-                        res.add(item)
-                return res
+                    if item not in list_set_a:
+                        list_set_a.append(item)
+                return self.from_list(list_set_a)
+
+    def mempty(self):
+        return None
 
     def __iter__(self):
         self.index = 0

@@ -3,8 +3,8 @@ import unittest
 import pytest
 from hypothesis import given
 import hypothesis.strategies as st
-import sys
-sys.path.append('../../src')
+# import sys
+# sys.path.append('../../src')
 from src.set_immutable  import *
 
 
@@ -66,17 +66,14 @@ class TestImmutableHashMap(unittest.TestCase):
 
 
     def test_from_list(self):
-        data = [
-            [],
-            [1],
-            [1,2],
-            [1, 2,3],
-            [1, 2, 3, None]
-        ]
-        for list in data:
-            set=NewSet()
-            b=from_list(set,list)
-            self.assertEqual(to_list(b), list)
+        list =[1, 2, 3, None]
+        set_a=NewSet()
+        set_a.add(1)
+        set_a.add(2)
+        set_a.add(3)
+        set_a.add(None)
+        set_b=from_list(NewSet(),list)
+        self.assertEqual(set_a,set_b)
 
     def test_find(self):
         def is_satisfied(x):
@@ -149,12 +146,9 @@ class TestImmutableHashMap(unittest.TestCase):
 
     @given(a=st.lists(st.integers()), b=st.lists(st.integers()), c=st.lists(st.integers()))
     def test_monoid_associativity(self, a, b, c):
-        set_a = from_list(None,a)
-        set_b = from_list(None,b)
-        set_c = from_list(None,c)
-        none_a=mconcat(None,set_a)
-        a_none=mconcat(set_a,None)
-        self.assertEqual(none_a,a_none)
+        set_a = from_list(NewSet(),a)
+        set_b = from_list(NewSet(),b)
+        set_c = from_list(NewSet(),c)
         a_b = mconcat(set_a, set_b)
         b_a = mconcat(set_b, set_a)
         self.assertEqual(a_b,b_a)
@@ -164,7 +158,14 @@ class TestImmutableHashMap(unittest.TestCase):
         a__b_c = mconcat(set_a, b_c)
         a_b__c = mconcat(a_b,set_c)
         self.assertEqual(a__b_c, a_b__c)
-        self.assertEqual(mconcat(None, None), None)
+
+    @given(a=st.lists(st.integers()))
+    def test_monoid_identity_element(self, a):
+        set_a = from_list(NewSet(), a)
+        none_a = mconcat(None, set_a)
+        a_none = mconcat(set_a, None)
+        self.assertEqual(none_a, a_none)
+        self.assertEqual(none_a,set_a)
 
 if __name__ =='__main__':
     unittest.main()

@@ -3,8 +3,8 @@ import unittest
 from hypothesis import given
 from collections import Counter
 import hypothesis.strategies as st
-import sys
-sys.path.append('../../src')
+# import sys
+# sys.path.append('../../src')
 import pytest
 from set_mutable import *
 class TestMutableSet(unittest.TestCase):
@@ -175,8 +175,8 @@ class TestMutableSet(unittest.TestCase):
         set1.from_list( [1, 2])
         set2.from_list( [3, 4,None])
         set3.from_list( [1, 2, 3, 4,None])
-        set1=set1.mconcat(set2)
-        self.assertEqual(set1.to_list(), set3.to_list())
+        set1.mconcat(set2)
+        self.assertEqual(set1,set3)
 
         with pytest.raises(TypeError):
             set1.mconcat(1)
@@ -208,18 +208,16 @@ class TestMutableSet(unittest.TestCase):
         set_a=NewSet()
         set_b=NewSet()
         set_c=NewSet()
-        set_a.from_list(a)
-        set_b.from_list(b)
-        set_c.from_list(c)
-        a_b=set_a.mconcat(set_b)
-        b_a=set_b.mconcat(set_a)
-        self.assertEqual(a_b, b_a)
-        b_c = set_b.mconcat(set_c)
-        c_b = set_c.mconcat(set_b)
-        self.assertEqual(b_c,c_b)
-        a__b_c = set_a.mconcat(b_c)
-        a_b__c = a_b.mconcat(set_c)
-        self.assertEqual(a__b_c,a_b__c)
+        set_a.from_list(a)#a
+        set_b.from_list(b)#b
+        set_c.from_list(c)#c
+        copy_set_a = copy.deepcopy(set_a)#a
+        set_a.mconcat(set_b) #ab
+        set_a.mconcat(set_c) #(ab)c
+
+        set_b.mconcat(set_c)  # bc
+        copy_set_a.mconcat(set_b) #a(bc)
+        self.assertEqual(copy_set_a,set_a)
 
 if __name__ =='__main__':
     unittest.main()
