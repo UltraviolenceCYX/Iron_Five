@@ -6,6 +6,7 @@ import hypothesis.strategies as st
 # import sys
 # sys.path.append('../../src')
 from src.set_immutable  import *
+from collections import Counter
 
 
 class TestImmutableHashMap(unittest.TestCase):
@@ -17,6 +18,8 @@ class TestImmutableHashMap(unittest.TestCase):
         self.assertEqual(size(b),1)
         b=add(b,2)
         self.assertEqual(size(b),2)
+        b = add(b, None)
+        self.assertEqual(size(b), 3)
         b = add(b, None)
         self.assertEqual(size(b), 3)
 
@@ -44,8 +47,6 @@ class TestImmutableHashMap(unittest.TestCase):
         list_set = NewSet()
         list_set.from_list([1, 2, None])
         self.assertEqual(b, list_set)
-
-
         b=remove(b,None)
         self.assertEqual(b.to_list(), [1,2])
         with pytest.raises(ValueError):
@@ -54,26 +55,39 @@ class TestImmutableHashMap(unittest.TestCase):
 
 
     def test_to_list(self):
+        def compare(s, t): #Judge whether two lists contain the same elements
+            return Counter(s) == Counter(t)
         set = NewSet()
         b=add(set,1)
-        self.assertEqual(to_list(b), [1])
+        self.assertEqual(compare(to_list(b),[1]),True)
         b=add(b,2)
-        self.assertEqual(to_list(b), [1, 2])
+        self.assertEqual(compare(to_list(b),[1,2]),True)
         b = add(b, None)
-        list_set = NewSet()
-        list_set.from_list([1, 2, None])
-        self.assertEqual(b, list_set)
+
+        self.assertEqual(compare(to_list(b),[1,2,None]),True)
 
 
     def test_from_list(self):
-        list =[1, 2, 3, None]
-        set_a=NewSet()
-        set_a.add(1)
-        set_a.add(2)
-        set_a.add(3)
-        set_a.add(None)
-        set_b=from_list(NewSet(),list)
-        self.assertEqual(set_a,set_b)
+
+        def compare(s, t): #Judge whether two lists contain the same elements
+            return Counter(s) == Counter(t)
+        data = [
+            [],
+            [1],
+            [1,2],
+            [1, 2,3],
+            [1, 2, 3, None]
+        ]
+        for list in data:
+            set=NewSet()
+            b=from_list(set,list)
+            self.assertEqual(compare(to_list(b),list),True)
+
+        num = 1
+        set_from_num = NewSet()
+        with pytest.raises(TypeError):
+            from_list(set_from_num,num)
+
 
     def test_find(self):
         def is_satisfied(x):
@@ -85,6 +99,8 @@ class TestImmutableHashMap(unittest.TestCase):
         set=from_list(set,[1,2,3,4])
 
         self.assertEqual(find(set,is_satisfied),[2,4])
+        with pytest.raises(TypeError):
+            find(set,1)
 
 
     def test_filter(self):
@@ -100,6 +116,9 @@ class TestImmutableHashMap(unittest.TestCase):
         for num in range(0, set.size()):
             self.assertEqual(list[num], num+3)  # 1 and 2 were removed
 
+        with pytest.raises(TypeError):
+            filter(set,1)
+
 
     def test_map(self):
         def increment(x):
@@ -111,12 +130,18 @@ class TestImmutableHashMap(unittest.TestCase):
         for num in range(0, set.size()):
             self.assertEqual(list[num], num+11)
 
+        with pytest.raises(TypeError):
+            map(set,1)
+
     def test_reduce(self):
         def plus_operation(a,b):
             return a+b
         set = NewSet()
         set = from_list(set, [1, 2, 3, 4, 5])
         self.assertEqual(reduce(set,plus_operation,10),25)
+
+        with pytest.raises(TypeError):
+            reduce(set,1,1)
 
 
     def test_mconcat(self):
@@ -130,6 +155,8 @@ class TestImmutableHashMap(unittest.TestCase):
 
         res=mconcat(set1,set2)
         self.assertEqual(to_list(res),to_list(set3))
+
+
 
 
 
