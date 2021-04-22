@@ -3,10 +3,9 @@ import unittest
 from hypothesis import given
 from collections import Counter
 import hypothesis.strategies as st
-# import sys
-# sys.path.append('../../src')
+
 import pytest
-from set_mutable import *
+from src.set_mutable import *
 class TestMutableSet(unittest.TestCase):
 
 

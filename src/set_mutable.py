@@ -1,5 +1,5 @@
 import copy
-from hash_map import *
+from src.hash_map import *
 from inspect import isfunction
 class NewSet(object):
 
