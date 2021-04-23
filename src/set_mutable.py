@@ -95,15 +95,10 @@ class NewSet(object):
             else:
                 list_set_a=self.to_list()
                 list_set_b=set.to_list()
-                # res = NewSet()
-                # for item in list_set_a:
-                #     res.add(item)
-                # tem=copy.deepcopy(res)
-                # tem=tem.to_list()
                 for item in list_set_b:
                     if item not in list_set_a:
-                        list_set_a.append(item)
-                return self.from_list(list_set_a)
+                        self.add(item)
+                return self
 
     def mempty(self):
         return None

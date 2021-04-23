@@ -42,7 +42,7 @@ After creating the hash table, we created a set which possesses a hash table and
 
 First, you should install the test packages using command `pip install hypothesis and pip install pytest`.
 
-Then, Just open the file set_pytest.py and run the main method. We can see that the results are correct.
+Then, just run the command `python ./src/Testcase/set_pytest.py` and we can see that the results are correct.
 
 ### Compare mutable and immutable implementation 
 
