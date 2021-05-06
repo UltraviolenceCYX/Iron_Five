@@ -18,11 +18,11 @@ class FiniteStateMachine(object):
         self.states.append(state)
 
 
-    def add_transition(self, name, current_state, next_state, trigger, action):
+    def add_transition(self, name, current_state_name, next_state_name, trigger, action):
         for state in self.states:
-            if state.name == current_state:
+            if state.name == current_state_name:
                 current_state = state
-            if state.name == next_state:
+            if state.name == next_state_name:
                 next_state = state
         transition = Transition(name, current_state, next_state, trigger, action)
         self.transitions.append(transition)
@@ -56,17 +56,17 @@ class FiniteStateMachine(object):
         res.append(" --------")
         res.append(" init_state--->start")
         for i, s in enumerate(self.states):
-            res.append(' state_{}[label="{}"];'.format(i, s.name))
+            res.append(' state_{}["{}"];'.format(i, s.name))
         res.append(" init_state--->end")
         res.append(" --------")
         res.append(" run--->start")
         for i in range(len(self.event_history)):
             if self.light_state_history[i][1]["Green"]==True:
-                res.append('clock_{}  state_0[label=Green]--Transition-->{}'.format(i,self.event_history[i][1]))
+                res.append('clock_{}  state_Green--Transition-->{}'.format(i,self.event_history[i][1]))
             elif self.light_state_history[i][1]["Yellow"] == True:
-                res.append('clock_{}  state_1[label=Yellow]--Transition-->{}'.format(i,self.event_history[i][1]))
+                res.append('clock_{}  state_Yellow--Transition-->{}'.format(i,self.event_history[i][1]))
             else:
-                res.append('clock_{}  state_2[label=Red]--Transition-->{}'.format(i,self.event_history[i][1]))
+                res.append('clock_{}  state_Red--Transition-->{}'.format(i,self.event_history[i][1]))
         res.append(" run--->end")
         res.append(" --------")
         res.append("}")
