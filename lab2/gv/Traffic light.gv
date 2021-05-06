@@ -1,0 +1,11 @@
+digraph "Traffic light" {
+	Green [color=green]
+	Yellow [color=yellow]
+	Red [color=red]
+	Green -> Green [label="Keep Green" color=green]
+	Green -> Yellow [label=Green2Yellow color=yellow]
+	Yellow -> Yellow [label="Keep Yellow" color=yellow]
+	Yellow -> Red [label=Yellow2Red color=red]
+	Red -> Red [label="Keep Red" color=red]
+	Red -> Green [label=Red2Green color=green]
+}
