@@ -1,5 +1,5 @@
 import unittest
-from StateMachine import *
+from lab2.src.StateMachine import *
 
 class FiniteStateMachineTest(unittest.TestCase):
     def test_state_machine(self):

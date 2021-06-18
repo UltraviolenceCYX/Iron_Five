@@ -1,4 +1,85 @@
 from collections import OrderedDict, namedtuple
+from functools import wraps
+
+def accepts():
+    def arg_type(f):
+        @wraps(f)
+        def new_f(*args):
+            if type(args[1])!=str:
+               raise TypeError("positional argument 1 should be a string")
+            return f(*args)
+        return new_f
+
+    return arg_type
+
+def accepts_add_state():
+    def arg_type(f):
+        @wraps(f)
+        def new_f(*args):
+            if type(args[1])!=str:
+                raise TypeError("positional argument 1 should be a string")
+            if type(args[2])!=dict:
+               raise TypeError("positional argument 2 should be a type of dict")
+            return f(*args)
+        return new_f
+
+    return arg_type
+
+def accepts_add_transition():
+    def arg_type(f):
+        @wraps(f)
+        def new_f(*args):
+            if type(args[1])!=str:
+               raise TypeError("positional argument 1 should be a string")
+            if type(args[2])!=str:
+               raise TypeError("positional argument 2 should be a string")
+            if type(args[3])!=str:
+               raise TypeError("positional argument 3 should be a string")
+            if not hasattr(args[4],"__call__"):
+                raise TypeError("positional argument 4 should be a function")
+            if not hasattr(args[5],"__call__"):
+                raise TypeError("positional argument 5 should be a function")
+
+            return f(*args)
+        return new_f
+
+    return arg_type
+
+def accepts_set_transition(f):
+    @wraps(f)
+    def new_f(*args):
+        if type(args[1])!=Transition:
+            raise TypeError("positional argument 1 should be a type of Transition")
+        return f(*args)
+    return new_f
+
+    return arg_type
+
+def accepts_activate(f):
+    @wraps(f)
+    def new_f(*args):
+        if type(args[1])==int or type(args[1])==str :
+            return f(*args)
+        else:
+            raise TypeError("positional argument 1 should be a type of int or str")
+
+
+    return new_f
+
+def accepts_execute():
+    def arg_type(f):
+        @wraps(f)
+        def new_f(*args):
+            #print(args)
+            if type(args[1])!=str:
+               raise TypeError("positional argument 1 should be a string")
+            if type(args[2])!=int:
+               raise TypeError("positional argument 2 should be a type of int")
+            return f(*args)
+        return new_f
+
+    return arg_type
+
 event = namedtuple("Event", "clock, state, light")
 
 
@@ -11,13 +92,12 @@ class FiniteStateMachine(object):
         self.event_history = []
         self.light_state_history = []
 
-
-
+    @accepts_add_state()
     def add_state(self, name, light):
         state = State(name, light)
         self.states.append(state)
 
-
+    @accepts_add_transition()
     def add_transition(self, name, current_state_name, next_state_name, trigger, action):
         for state in self.states:
             if state.name == current_state_name:
@@ -30,14 +110,14 @@ class FiniteStateMachine(object):
             if s == current_state:
                 s.set_transition(transition)
 
-
+    @accepts()
     def set_start_state(self, state_name):
         for state in self.states:
             if state.name == state_name:
                 self.current_state = state
                 break
 
-
+    @accepts_execute()
     def execute(self, start_state, total_clk, clk_n=0):
         clock = 0
         self.set_start_state(start_state)
@@ -48,6 +128,16 @@ class FiniteStateMachine(object):
             self.light_state_history.append((clock, self.current_state.light))
             self.event_history.append((clock, tr.name, clk_n))
         return self.current_state.light
+
+    def text(self,string):
+        self.set_start_state("start_a")
+        assert self.current_state is not None
+        for i in string:
+            self.current_state, clk_n, tr = self.current_state.activate(i)
+        if self.current_state.name=="end_c":
+            return True
+        else:
+            return False
 
     def visualize(self):
         res = []
@@ -79,9 +169,11 @@ class State(object):
         self.light = light
         self.transitions = []
 
+    @accepts_set_transition
     def set_transition(self, transition):
         self.transitions.append(transition)
 
+    @accepts_activate
     def activate(self, clk_n):
         for tr in self.transitions:
             if tr.trigger(clk_n):
