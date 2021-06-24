@@ -20,6 +20,8 @@ class TestImmutableHashMap(unittest.TestCase):
         self.assertEqual(size(b), 3)
         b = add(b, None)
         self.assertEqual(size(b), 3)
+        # the size of set remained 0 so it is immutable
+        self.assertEqual(set.size(), 0)
 
 
     def test_add(self):
@@ -34,21 +36,29 @@ class TestImmutableHashMap(unittest.TestCase):
         list_set = NewSet()
         list_set.from_list([1, 2, None])
         self.assertEqual(b, list_set)
+        # the size of set remained 0 so it is immutable
+        self.assertEqual(set.size(),0)
+
 
 
     def test_remove(self):
         set=NewSet()
         b=add(set,1)
+
         b=add(b,2)
         b=add(b,None)
 
         list_set = NewSet()
         list_set.from_list([1, 2, None])
         self.assertEqual(b, list_set)
-        b=remove(b,None)
-        self.assertEqual(b.to_list(), [1,2])
+
+
+        c=remove(b,None)
+        self.assertEqual(c.to_list(), [1,2])
+        # b not changed, so it is immutable
+        self.assertEqual(b.to_list(), [1, 2,None])
         with pytest.raises(ValueError):
-            b = remove(b, 4)
+            c = remove(c, 4)
 
 
 
