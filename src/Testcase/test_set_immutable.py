@@ -192,6 +192,23 @@ class TestImmutableHashMap(unittest.TestCase):
         self.assertEqual(none_a, a_none)
         self.assertEqual(none_a,set_a)
 
+    @given(a=st.lists(st.integers()),c=st.lists(st.integers()))
+    def test_immutability(self,a,c):
+        # check immutability  after add an element
+        set_a = from_list(NewSet(), a)
+        set_a_copy=copy.deepcopy(set_a)
+        add(set_a,1)
+        self.assertEqual(set_a,set_a_copy)
+
+        # check immutability  after remove an element
+        set_c = from_list(NewSet(), c)
+        set_c_copy = copy.deepcopy(set_c)
+        if(set_c.size()>0):
+            remove(set_c, set_c.to_list()[0])
+            self.assertEqual(set_c, set_c_copy)
+
+
+
 if __name__ =='__main__':
     unittest.main()
 
