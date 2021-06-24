@@ -90,6 +90,7 @@ class TestMutableSet(unittest.TestCase):
                 return True
             else:
                 return False
+
         set=NewSet()
         set.add(1)
         set.add(2)

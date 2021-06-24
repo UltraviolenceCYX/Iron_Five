@@ -5,14 +5,14 @@ def size(set:NewSet):
     return set.size()
 
 
-def add(set:NewSet,element):
+def add(set:NewSet,element:object)->bool:
 
 
     set_copy = copy.deepcopy(set)
     set_copy.add(element)
     return set_copy
 
-def remove(set:NewSet,element):
+def remove(set:NewSet,element:object)->bool:
 
 
     set_copy = copy.deepcopy(set)
@@ -20,7 +20,7 @@ def remove(set:NewSet,element):
     return set_copy
 
 
-def from_list(set:NewSet,list):
+def from_list(set:NewSet,list:list)->NewSet:
     if type(list).__name__ != 'list':
         raise TypeError('Parameter must be list type!')
     if list == None :
@@ -33,14 +33,14 @@ def from_list(set:NewSet,list):
         set_copy.hash_map.add(i, object())
     return set_copy
 
-def to_list(set:NewSet):
+def to_list(set:NewSet)->list:
     res = []
     for list in set.hash_map.items:
         for item in list:
             res.append(item[0])
     return res
 
-def find(set:NewSet,is_satisfied):
+def find(set:NewSet,is_satisfied)->list:
     if not isfunction(is_satisfied):
         raise TypeError('Parameter must be function!')
     if is_satisfied == None:
@@ -51,7 +51,7 @@ def find(set:NewSet,is_satisfied):
             res.append(item)
     return res
 
-def filter(set:NewSet,is_filtered):
+def filter(set:NewSet,is_filtered)->NewSet:
     if not isfunction(is_filtered):
         raise TypeError('Parameter must be function!')
     if is_filtered == None:
@@ -62,7 +62,7 @@ def filter(set:NewSet,is_filtered):
             set_copy.remove(item)
     return set_copy
 
-def map(set:NewSet,func):
+def map(set:NewSet,func)->NewSet:
     if not isfunction(func):
         raise TypeError('Parameter must be function!')
     if func == None:
@@ -73,7 +73,7 @@ def map(set:NewSet,func):
         set_copy.remove(item)
     return set_copy
 
-def reduce(set:NewSet,func,initial_state):
+def reduce(set:NewSet,func,initial_state:int)->int:
     if not isfunction(func):
         raise TypeError('Parameter must be function!')
     if func == None or initial_state == None:
@@ -83,7 +83,7 @@ def reduce(set:NewSet,func,initial_state):
         state = func(state, item)
     return state
 
-def mconcat(set1:NewSet,set2:NewSet):
+def mconcat(set1:NewSet,set2:NewSet)->NewSet:
     if set1 is None and set2 is None:
         return None
     if set2 is None:

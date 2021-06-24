@@ -1,4 +1,6 @@
 import copy
+from builtins import *
+
 from src.hash_map import *
 from inspect import isfunction
 class NewSet(object):
@@ -21,16 +23,16 @@ class NewSet(object):
 
 
 
-    def size(self):
+    def size(self)->int:
         return self.hash_map.count
 
-    def add(self,element):
+    def add(self,element:object)->bool:
         return self.hash_map.add(element,self.value)
 
-    def remove(self,element):
+    def remove(self,element:object)->bool:
         return self.hash_map.remove(element)
 
-    def from_list(self,list):
+    def from_list(self,list:list):
         if type(list).__name__!='list':
             raise TypeError('Parameter must be list type!')
         if list == None:
@@ -38,14 +40,14 @@ class NewSet(object):
         for i in list:
             self.hash_map.add(i,self.value)
 
-    def to_list(self):
+    def to_list(self)->list:
         res=[]
         for list in self.hash_map.items:
             for item in list:
                 res.append(item[0])
         return res
 
-    def find(self,is_satisfied):
+    def find(self,is_satisfied)->list:
         if not isfunction(is_satisfied):
             raise TypeError('Parameter must be function!')
         if is_satisfied==None:
@@ -76,7 +78,7 @@ class NewSet(object):
             self.remove(item)
         return True
 
-    def reduce(self,func,initial_state):
+    def reduce(self,func,initial_state:int)->int:
         if not isfunction(func):
             raise TypeError('Parameter must be function!')
         if func==None or initial_state == None:
